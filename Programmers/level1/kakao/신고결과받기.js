@@ -1,49 +1,56 @@
 function solution(id_list, report, k) {
-    let answer = []
-    let datalist=[]
-    let cnt_list=[]
+    let answer = [];
+    let users=[]
+    let singoUsers=[]
 
+
+    // 1. report muzi frodo = muzi가 frode를 신고 함 , (muzi = key value= 신고한사람 저장) => set으로 저장 중복신고 불가능 
     for(let i=0;i<id_list.length;i++){
-        cnt_list[id_list[i]]=0
-        answer[id_list[i]]=0
-        datalist[id_list[i]]=new Set() 
-      }
-      // 변수선언
-  
-
-      // 중복신고 제거 포함 datalist= 신고한사람 : {신고당한사람}
-    for(let i=0;i<report.length;i++){  
-        const t=report[i].split(' ')
-        const my_id=t[0] //신고한사람
-        const t_id=t[1] //당한사람
-        datalist[my_id].add(t_id)  
+        users[id_list[i]]=new Set()
+        singoUsers[id_list[i]]=0
     }
 
-    // 신고횟수 카운팅
-    for(let key in datalist){
-        if(datalist[key].size!=0){
-            for(let a of datalist[key].keys()){
-                cnt_list[a]+=1 //신고횟수증가
+    // 2. 해당유저가 신고한사람을 넣음 (중복신고 x)
+    for(let i=0;i<report.length;i++){
+        const tmp=report[i].split(' ')
+        users[tmp[0]].add(tmp[1]) 
+    }
+    
+    
+    // 3. 신고 당한사람 카운팅
+
+    for(const key in users){
+        for(const value of users[key].keys()){
+            singoUsers[value]+=1
+        }
+    }
+
+    // 4. 정지된 아이디인지 확인하고 정지된아이디면 정답에 넣음 
+    for(const key in users){
+        let cnt=0
+        for(const value of users[key].keys()){
+            if(singoUsers[value]>=k){
+                cnt+=1
             }
         }
-    }  
+        answer.push(cnt)
+    }
     
-    // 신고횟수가 k이상인 유저 찾기 
-    for(let key in datalist){
-       for(let a of datalist[key].keys()){
-           if(cnt_list[a]>=k){
-                answer[key]+=1
-           }
-       }
-    }
 
-    //정답 배열 반환
-    let tmp=[]
-    for(let i=0;i<id_list.length;i++){
-        tmp.push(answer[id_list[i]])
-    }
-    return tmp;
+
+
+
+
+
+
+
+    return answer;
+
+
 }
+// 해당 id_list의 유저가 정지시킨 유저의 수 반환 
+
+
 
 //solution(["muzi", "frodo", "apeach", "neo"],["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"],2)
 //solution(["con", "ryan"],["ryan con", "ryan con", "ryan con", "ryan con"],3)
