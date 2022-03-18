@@ -1,3 +1,71 @@
+class Node {
+    constructor(item) {
+      this.item = item;
+      this.next = null;
+    }
+  }
+
+class Queue {
+    constructor() {
+      this.head = null;
+      this.tail = null;
+      this.length = 0;
+    }
+  
+    push(item) {
+      const node = new Node(item)
+      if (this.head === null) {
+        this.head = node;
+        this.tail = node;
+      } else {
+        this.tail.next = node;
+      }
+  
+      this.tail = node;
+      this.length += 1;
+    }
+  
+    pop() {
+      if(this.length==0){
+        return -1;
+      }else{
+        const popItem = this.head.item;
+        this.head = this.head.next;
+        this.length -= 1;
+        return popItem;
+      }
+    }
+  
+    size(){
+      return this.length;
+    }
+  
+    empty(){
+      if(this.length==0){
+        return 1
+      }else{
+        return 0;
+      }
+    }
+  
+    front(){
+      if(this.length==0){
+        return -1;
+      }else{
+        return this.head.item
+      }
+    }
+  
+    back(){
+      if(this.length==0){
+        return -1;
+      }else{
+        return this.tail.item
+      }
+    }
+  }
+  
+  
 const fs = require('fs');
 let input = fs.readFileSync('/dev/stdin').toString().split('\n');
 //let input = fs.readFileSync(__dirname+'/input.txt').toString().split('\n');
@@ -11,12 +79,13 @@ let visited=Array.from(Array(+n),()=>Array(+m).fill(false))
 input.map((e)=>board.push(e.split(' ')))
 
 const bfs=(cur_x,cur_y)=>{
-    let queue=[]
+    let queue=new Queue()
+
     visited[cur_x][cur_y]=true
-    queue.unshift([cur_x,cur_y])
+    queue.push([cur_x,cur_y])
     let cnt=1
-    while(queue.length!=0){
-        let [cx,cy]=queue.shift()
+    while(queue.size()!=0){
+        let [cx,cy]=queue.pop()
         for(let i=0;i<4;i++){
             let nx=dx[i]+cx
             let ny=dy[i]+cy
@@ -26,7 +95,7 @@ const bfs=(cur_x,cur_y)=>{
             }
             if(!visited[nx][ny] && board[nx][ny]=='1'){
                 visited[nx][ny]=true
-                queue.unshift([nx,ny])
+                queue.push([nx,ny])
                 cnt+=1
             }
         }
