@@ -29,8 +29,11 @@ def check_alphs(a,b):
 
 def solution(user_id, banned_id):
     answer = []
+
+    # user_id로 banned_id가 될수있는 조합을 만들면됨 이떄 퍼뮤테이션으로 해야 길이조건을 안따질수있음
+
+
     #  1. 컴비네이션으로 하면 조건에 맞는 답을 찾기가 까다로워짐 퍼뮤테이션으로 할경우 쉽게 처리가능 
-    
     ban_list=list(itertools.permutations(user_id,len(banned_id)))
 
 
