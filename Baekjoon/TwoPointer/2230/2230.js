@@ -1,9 +1,10 @@
 const fs = require("fs");
-let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
-// let input = fs
-//   .readFileSync(__dirname + "/input.txt")
-//   .toString()
-//   .split("\n");
+// let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+let input = fs
+  .readFileSync(__dirname + "/input.txt")
+  .toString()
+  .trim()
+  .split("\n");
 
 let answer = 0x7fffffff;
 let [n, m] = input[0].split(" ").map((n) => +n);

@@ -15,6 +15,7 @@ class Solution(object):
 
         max_idx=last_idx[s[0]]
         answer=[]
+        # 2.end를 이동시키면서 끝나는 idx값이 가장 큰값을 저장함 이때 max_idx값과 end값이 같게되면 그 구간이 중복되지않는 문자열의파티션
         while end!=len(s):
               max_idx=max(last_idx[s[end]],max_idx)
               if end==max_idx:

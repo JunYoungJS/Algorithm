@@ -84,6 +84,7 @@ while (stickers != 0) {
   stickers -= 1;
 }
 
+// 정답
 let answer = 0;
 for (let i = 0; i < board_row; i++) {
   for (let j = 0; j < board_col; j++) {
