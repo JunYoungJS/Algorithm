@@ -3,23 +3,24 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function (s) {
-  let answer = 0;
-  let end = 0;
-  let tmp = [];
-  for (let i = 0; i < s.length; i++) {
-    while (end < s.length) {
-      if (!tmp.includes(s[end])) {
-        tmp.push(s[end]);
-        end += 1;
-      } else {
-        break;
-      }
-    }
+  const list = [];
 
-    answer = Math.max(answer, end - i);
-    tmp = tmp.filter((e) => e !== s[i]);
+  let start = 0;
+  let end = 0;
+  let answer = 0;
+  while (start <= end && start < s.length && end < s.length) {
+    if (list.includes(s[end])) {
+      answer = Math.max(answer, end - start);
+      list.splice(s[start], 1);
+      start += 1;
+    } else {
+      list.push(s[end]);
+      end += 1;
+    }
   }
+
+  answer = Math.max(answer, end - start);
   return answer;
 };
 
-lengthOfLongestSubstring("pwwkew");
+lengthOfLongestSubstring(" ");
