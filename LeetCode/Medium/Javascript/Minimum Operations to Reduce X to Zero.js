@@ -16,7 +16,7 @@ var minOperations = function (nums, x) {
   let res = 0;
   while (start < nums.length) {
     res += nums[start];
-    //
+    // 정답보다 커버리는값이나오면 뺴줌
     while (end < nums.length && total - x < res) {
       res -= nums[end];
       end += 1;
