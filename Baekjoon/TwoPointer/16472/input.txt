@@ -1,2 +1,2 @@
-2
-abbcaccba
+3
+aaaab

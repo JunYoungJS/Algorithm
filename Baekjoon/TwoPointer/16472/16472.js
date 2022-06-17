@@ -1,10 +1,10 @@
 const fs = require("fs");
-//let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
-let input = fs
-  .readFileSync(__dirname + "/input.txt")
-  .toString()
-  .trim()
-  .split("\n");
+let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
+// let input = fs
+//   .readFileSync(__dirname + "/input.txt")
+//   .toString()
+//   .trim()
+//   .split("\n");
 
 const n = +input.shift();
 input = input[0];
@@ -19,19 +19,9 @@ for (let i = 0; i < 26; i++) {
   alpha[t] = 0;
 }
 
-while (start < input.length) {
-  if (end === input.length) {
-    alpha[input[start]] -= 1;
-    if (alpha[input[start]] === 0) {
-      d.delete(input[start]);
-    }
-    answer = Math.max(answer, end - start);
-    start += 1;
-    continue;
-  }
-
+while (start < input.length && end < input.length) {
   if (d.size > n) {
-    answer = Math.max(answer, end - start);
+    answer = Math.max(answer, end - start - 1);
     alpha[input[start]] -= 1;
     if (alpha[input[start]] === 0) {
       d.delete(input[start]);
@@ -40,10 +30,14 @@ while (start < input.length) {
     continue;
   }
 
+  answer = Math.max(answer, end - start - 1);
   alpha[input[end]] += 1;
   d.add(input[end]);
 
   end += 1;
+}
+if (d.size <= n) {
+  answer = Math.max(answer, end - start);
 }
 
 console.log(answer);
