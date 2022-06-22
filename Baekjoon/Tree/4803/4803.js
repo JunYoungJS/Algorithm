@@ -19,6 +19,7 @@ while (input.length != 0) {
 
   var graph = Array.from(new Array(n + 1), () => new Array());
   var visited = new Array(n + 1).fill(false);
+  var finished = new Array(n + 1).fill(false);
   for (let i = 0; i < m; i++) {
     let [aNode, bNode] = input
       .shift()
@@ -28,18 +29,14 @@ while (input.length != 0) {
     graph[bNode].push(aNode);
   }
   trees = 0;
-  // 정점의개수 , 간선의개수 카운트 , dfs로 간선의개수 count
+  cycles = 0;
   for (let node = 1; node <= n; node++) {
-    nodes = 0;
-    vertex = 0;
     if (!visited[node]) {
       dfs(node);
-
-      if ((nodes - 1) * 2 === vertex) {
-        trees += 1;
-      }
+      trees += 1;
     }
   }
+  trees = trees - cycles;
   if (trees > 1) {
     answer += `Case ${c}: A forest of ${trees} trees.\n`;
   } else if (trees === 1) {
@@ -50,16 +47,16 @@ while (input.length != 0) {
   c += 1;
 }
 console.log(answer);
-function dfs(start) {
-  visited[start] = true;
-  nodes += 1;
-  vertex += graph[start].length;
-  for (let i = 0; i < graph[start].length; i++) {
-    const next = graph[start][i];
+function dfs(cur, prev) {
+  visited[cur] = true;
+  for (let i = 0; i < graph[cur].length; i++) {
+    const next = graph[cur][i];
     if (!visited[next]) {
-      dfs(next);
+      dfs(next, cur);
+    } else if (visited[next] && !finished[next] && next !== prev) {
+      cycles += 1;
     }
   }
-
+  finished[cur] = true;
   return;
 }
