@@ -10,7 +10,11 @@ const n=+input.shift()
 const machines = input.shift().split(' ').map((n) => BigInt(n))
 machines.sort((a, b) => a<b?-1:1)
 let answer=-Infinity
-// 짝수 일경우 모든 기구 사용 다가능 맨 앞 값 + 맨뒤값
+
+
+// 홀수일경우에는 맨마지막꺼를 제외하면 됨 
+
+// 나머지일 경우 가장작은것과 큰값을 더하면 현재 값에서 근손실을 막을수있는 최대 횟수로 그리디하게됨
 if (machines.length % 2 === 1) {
    machines.unshift(BigInt(0))
 }
